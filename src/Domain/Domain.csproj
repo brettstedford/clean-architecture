@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ValueObjects\Password.cs" />
+    <Compile Remove="Entities\RegisteredUser.cs" />
+    <Compile Remove="Entities\UserSession.cs" />
+    <Compile Remove="Repositories\IUserSessionRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities" />
+  </ItemGroup>
+
+</Project>
