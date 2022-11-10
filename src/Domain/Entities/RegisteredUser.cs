@@ -4,9 +4,9 @@ namespace Domain.Entities;
 
 public sealed class RegisteredUser : UserSession
 {
-    public FirstName FirstName { get; private set; }
-    public Surname Surname { get; private set; }
-    public EmailAddress EmailAddress { get; private set; }
+    public FirstName FirstName { get; private init; }
+    public Surname Surname { get; private init; }
+    public EmailAddress EmailAddress { get; private init; }
 
     private RegisteredUser(Guid id) : base(id)
     {

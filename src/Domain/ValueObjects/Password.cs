@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using Domain.Primitives;
 using Domain.Shared;
@@ -26,8 +27,8 @@ public sealed class Password : ValueObject
         return Result.Failure<Password>(new Error("Password.Invalid",
             "Password must be at least 8 characters long and contain at least 2 uppercase characters, 3 lowercase characters, 2 digits and a special character"));
     }
-    
-    public string GetHash() 
+
+    public string Hash => Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Value)));
 
     protected override IEnumerable<object> GetAtomicValues()
     {

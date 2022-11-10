@@ -1,0 +1,20 @@
+﻿services:
+  db:
+    image: postgres
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_DB=hotellier
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    ports:
+      - 8080:80
+    environment:
+      - POSTGRES_NAME=hotellier
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - db

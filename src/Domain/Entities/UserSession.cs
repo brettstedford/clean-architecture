@@ -13,9 +13,4 @@ public class UserSession : Entity
     {
         return RegisteredUser.Create(firstName, surname, emailAddress);
     }
-
-    public RegisteredUser Login(EmailAddress emailAddress, Password password)
-    {
-        
-    }
 }
