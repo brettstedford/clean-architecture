@@ -1,3 +1,4 @@
+using Domain.Repositories;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,7 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<HotellierContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("HotellierContext")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("HotellierDb");
+    options.UseNpgsql(connectionString);
+});
+
+builder.Services.AddScoped<IUserSessionRepository, UserSessionRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -15,7 +21,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("beta"))
 {
     app.UseSwagger();
     app.UseSwaggerUI();

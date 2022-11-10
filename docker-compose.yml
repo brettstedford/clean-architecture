@@ -1,8 +1,22 @@
 ﻿services:
+  ad-admin:
+    image: dpage/pgadmin4
+    ports: 
+      - 7070:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=bsteds234@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json # preconfigured servers/connections
+      - ./pgpass:/pgpass # passwords for the connections in this file
+    depends_on:
+      - db
   db:
     image: postgres
+    ports:
+      - 5432:5432
     volumes:
-      - ./dbdata:/var/lib/postgresql/data"
+      - ./pgdata:/var/lib/postgresql/data"
     environment:
       - POSTGRES_DB=hotellier
       - POSTGRES_USER=postgres
@@ -15,6 +29,6 @@
       - POSTGRES_NAME=hotellier
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=beta
     depends_on:
       - db

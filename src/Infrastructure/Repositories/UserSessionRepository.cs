@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
@@ -14,11 +15,17 @@ public class UserSessionRepository : IUserSessionRepository
 
     public Task<UserSession> Load(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(_ctx.Sessions.AsNoTracking().SingleOrDefault(s => s.Id == id));
     }
 
-    public Task Save(UserSession userSession, CancellationToken cancellationToken)
+    public async Task Save(UserSession userSession, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var exists = _ctx.Sessions.Any(s => s.Id == userSession.Id);
+
+        if (!exists)
+        {
+            _ctx.Sessions.Add(userSession);
+            await _ctx.SaveChangesAsync(cancellationToken);
+        }
     }
 }

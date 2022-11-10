@@ -7,6 +7,12 @@ public class HotellierContext : DbContext
 {
     public DbSet<UserSession> Sessions { get; set; }
 
-    public HotellierContext(DbContextOptions options) : base(options)
-    {}
+    public HotellierContext(DbContextOptions<HotellierContext> options) : base(options)
+    {
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.UseSerialColumns();
+    }
 }
